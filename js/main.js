@@ -18,16 +18,33 @@ function randomRGB() {
   return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
 }
 
-class Ball {
-  constructor(x, y, velX, velY, color, size) {
+class Shape {
+  constructor(x, y, velX, velY) {
     this.x = x;
     this.y = y;
     this.velX = velX;
     this.velY = velY;
+  }
+}
+
+
+
+class Ball extends Shape {
+  //take in same argments as before
+  constructor(x, y, velX, velY, color, size) {
+    //call Shape constructor using super
+    super(x, y, velX, velY);
+
+    //  this.x = x;
+    //  this.y = y;
+    // this.velX = velX;
+    // this.velY = velY;
+    //initialize its own color and size, and define exists.
     this.color = color;
     this.size = size;
-  }
+    this.exists = true;
 
+  }
   draw() {
     ctx.beginPath();
     ctx.fillStyle = this.color;
@@ -89,17 +106,135 @@ while (balls.length < 25) {
   balls.push(ball);
 }
 
+
+
+
+
+
+
+
+
+
+class EvilCircle extends Shape {
+  constructor(x, y) {
+    //call Shape constructor using super velX and Y hardcoded
+    super(x, y, 20, 20);
+    //set color to white and size to 10
+    this.color = "blue";
+    this.size = 10;
+    this.exists = true;
+
+    window.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case "a":
+          this.x -= this.velX;
+          break;
+        case "d":
+          this.x += this.velX;
+          break;
+        case "w":
+          this.y -= this.velY;
+          break;
+        case "s":
+          this.y += this.velY;
+          break;
+      }
+    });
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.fillStyle = "blue";
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 3;
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+
+  checkBounds() {
+    if (this.x + this.size >= width) {
+      //this.velX = -Math.abs(this.velX);
+      this.x = width - this.size;
+    }
+
+    if (this.x - this.size <= 0) {
+      //this.velX = Math.abs(this.velX);
+      this.x = this.size;
+    }
+
+    if (this.y + this.size >= height) {
+      //this.velY = -Math.abs(this.velY);
+      this.y = height - this.size;
+    }
+
+    if (this.y - this.size <= 0) {
+      //this.velY = Math.abs(this.velY);
+      this.y = this.size;
+    }
+
+    // this.x += this.x;
+    // this.y += this.y;
+  }
+
+  collisionDetect() {
+
+    for (const ball of balls) {
+      //considerd only if exists is true
+      if (!(this === ball)) {
+        if (ball.exists) {
+          const dx = this.x - ball.x;
+          const dy = this.y - ball.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < this.size + ball.size) {
+            ball.exists = false;
+          }
+        }
+
+      }
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+const evilCircle = new EvilCircle(10, 10);
 function loop() {
   ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
   ctx.fillRect(0, 0, width, height);
 
   for (const ball of balls) {
-    ball.draw();
-    ball.update();
-    ball.collisionDetect();
+    if (ball.exists) {
+      ball.draw();
+      ball.update();
+      ball.collisionDetect();
+    }
+
   }
+
+  evilCircle.draw();
+  evilCircle.checkBounds();
+  evilCircle.collisionDetect();
 
   requestAnimationFrame(loop);
 }
+
+
+
+
+
+
+
+
+
 
 loop();

@@ -110,8 +110,8 @@ while (balls.length < 25) {
 
 
 
-
-
+let ballcount = 25;
+const bcountp = document.getElementById("bcount");
 
 
 
@@ -188,6 +188,9 @@ class EvilCircle extends Shape {
 
           if (distance < this.size + ball.size) {
             ball.exists = false;
+
+            ballcount--;
+            bcountp.textContent = `Balls remaining: ${ballcount}`;
           }
         }
 

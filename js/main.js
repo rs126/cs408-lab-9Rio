@@ -18,6 +18,9 @@ function randomRGB() {
   return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
 }
 
+/**
+ * creates shape object parent class
+ */
 class Shape {
   constructor(x, y, velX, velY) {
     this.x = x;
@@ -35,10 +38,6 @@ class Ball extends Shape {
     //call Shape constructor using super
     super(x, y, velX, velY);
 
-    //  this.x = x;
-    //  this.y = y;
-    // this.velX = velX;
-    // this.velY = velY;
     //initialize its own color and size, and define exists.
     this.color = color;
     this.size = size;
@@ -75,7 +74,7 @@ class Ball extends Shape {
 
   collisionDetect() {
     for (const ball of balls) {
-      if (!(this === ball)) {
+      if (ball.exists && !(this === ball)) {
         const dx = this.x - ball.x;
         const dy = this.y - ball.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -107,20 +106,20 @@ while (balls.length < 25) {
 }
 
 
-
-
-
 let ballcount = 25;
 const bcountp = document.getElementById("bcount");
 
 
-
+/**
+ * Creates Evil Circle
+ * AI Use: AI Assisted
+ */
 class EvilCircle extends Shape {
   constructor(x, y) {
     //call Shape constructor using super velX and Y hardcoded
     super(x, y, 20, 20);
     //set color to white and size to 10
-    this.color = "blue";
+    this.color = "white";
     this.size = 10;
     this.exists = true;
 
@@ -144,14 +143,16 @@ class EvilCircle extends Shape {
 
   draw() {
     ctx.beginPath();
-    ctx.fillStyle = "blue";
-    ctx.strokeStyle = "blue";
+    //ctx.fillStyle = "black";
+    ctx.strokeStyle = "white";
+    //Make stroke thicker
     ctx.lineWidth = 3;
     ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-    ctx.fill();
+    ctx.stroke();
   }
 
   checkBounds() {
+    //Get rid of last two lines and dont update velX and velY
     if (this.x + this.size >= width) {
       //this.velX = -Math.abs(this.velX);
       this.x = width - this.size;
@@ -172,8 +173,6 @@ class EvilCircle extends Shape {
       this.y = this.size;
     }
 
-    // this.x += this.x;
-    // this.y += this.y;
   }
 
   collisionDetect() {
@@ -189,8 +188,10 @@ class EvilCircle extends Shape {
           if (distance < this.size + ball.size) {
             ball.exists = false;
 
+            //decrement ball count and update on web page
             ballcount--;
             bcountp.textContent = `Balls remaining: ${ballcount}`;
+
           }
         }
 
@@ -199,15 +200,6 @@ class EvilCircle extends Shape {
   }
 
 }
-
-
-
-
-
-
-
-
-
 
 
 const evilCircle = new EvilCircle(10, 10);
@@ -230,14 +222,6 @@ function loop() {
 
   requestAnimationFrame(loop);
 }
-
-
-
-
-
-
-
-
 
 
 loop();

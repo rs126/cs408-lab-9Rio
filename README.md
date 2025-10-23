@@ -2,23 +2,18 @@
 
 ## Overview
 
-TODO: Write a project description
+TODO: For this project we used a combination of Javascript, CSS and HTML to create a game.
+The game spawns in a handful of balls as well as a special ball called an Evil Circle. The
+Goal of the game is to move the evil circle around with the arrow keys until the ball is gone.
 
 ## Sources and Credits
 
-TODO: You must credit the sources and authors of any code, libraries, or other
-assets you use in your project. If you leave this section blank, your project
-will be considered in violation of the Academic Honesty policy unless you truly
-created everything from scratch with no outside help. If you need to use a
-source that you cannot credit (e.g. a classmate's work), you must get explicit
-permission from your instructor.
-
 A simple bulleted list below is sufficient. For example:
 
-- Bootstrap: https://getbootstrap.com/
-- jQuery: https://jquery.com/
-- Background image: https://unsplash.com/photos/...
-- Sound effects: https://freesound.org/people/...
-- Icons: https://fontawesome.com/
-- Fonts: https://fonts.google.com/
-- etc.
+- MDN Stroke Style: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeStyle
+- Evil Circle Object Creation: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Object_basics
+- Evil Circle Class:  https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Advanced_JavaScript_objects/Classes_in_JavaScript
+- Evil Circle Collision Detect: Chat GPT
+- Correctly Adding Evil circle: Chat GPT
+- Correctly tracking the ball count: Chat GPT
+- Evil Circle Check Bounds: Chat GPT

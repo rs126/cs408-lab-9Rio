@@ -143,7 +143,6 @@ class EvilCircle extends Shape {
 
   draw() {
     ctx.beginPath();
-    //ctx.fillStyle = "black";
     ctx.strokeStyle = "white";
     //Make stroke thicker
     ctx.lineWidth = 3;
